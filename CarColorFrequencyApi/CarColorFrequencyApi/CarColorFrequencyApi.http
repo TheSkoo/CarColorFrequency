@@ -1,0 +1,6 @@
+@CarColorFrequencyApi_HostAddress = http://localhost:5009
+
+GET {{CarColorFrequencyApi_HostAddress}}/CarColorFrequency/
+Accept: application/json
+
+###
