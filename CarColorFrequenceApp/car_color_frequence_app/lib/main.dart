@@ -76,19 +76,23 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Wrap(
-    spacing: 8.0, // Space between buttons
-    runSpacing: 8.0, // gap between lines
-    children: colorData.map((label) {
-      return ElevatedButton(
-        onPressed: () => print('Pressed $label'),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Color(label.backgroundColorRGB + 4278190080), // convert to ARGB by adding alpha value
-          foregroundColor: Color(label.foregroundColorRGB + 4278190080),
-        ),
-        child: Text(label.color),
-      );
-    }).toList(),
+    return Container (
+      padding: const EdgeInsets.all(16.0),
+      color: Colors.white70,
+      child: Wrap(
+        spacing: 8.0, // Space between buttons
+        runSpacing: 8.0, // gap between lines
+        children: colorData.map((label) {
+          return ElevatedButton(
+            onPressed: () => print('Pressed $label'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(label.backgroundColorRGB + 4278190080), // convert to ARGB by adding alpha value
+              foregroundColor: Color(label.foregroundColorRGB + 4278190080),
+            ),
+            child: Text(label.color),
+          );
+        }).toList(),
+        )
     );
   }
 }
