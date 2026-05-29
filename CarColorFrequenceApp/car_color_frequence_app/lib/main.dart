@@ -68,6 +68,19 @@ class _MyHomePageState extends State<MyHomePage> {
   });
   }
 
+  void _incrementCounter(int colorDictId) {
+    var colorDataItem = colorData.firstWhere((item) => item.colorDictId == colorDictId);
+    colorDataItem.count++;
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      //_counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -84,12 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
         runSpacing: 8.0, // gap between lines
         children: colorData.map((label) {
           return ElevatedButton(
-            onPressed: () => print('Pressed $label'),
+            onPressed: () => _incrementCounter(label.colorDictId),
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(label.backgroundColorRGB + 4278190080), // convert to ARGB by adding alpha value
               foregroundColor: Color(label.foregroundColorRGB + 4278190080),
             ),
-            child: Text(label.color),
+            child: Text(label.getFormattedCount()),
           );
         }).toList(),
         )
