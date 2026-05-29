@@ -15,6 +15,13 @@ class ColorData {
       required this.count,
     });
     
+  String getFormattedCount() {
+    return count.toString().replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (Match m) => '${m[1]},',
+    );
+  }
+
   factory ColorData.fromJson(Map<String, dynamic> json) {
     return ColorData(
       colorDictId: json['colorDictId'],
