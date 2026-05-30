@@ -1,6 +1,6 @@
 INSERT INTO [ColorDict] (Color, BackgroundColorRGB, ForegroundColorRGB, [Count]) VALUES('Black', 0x000000, 0XFFFFFF, 0)
 INSERT INTO [ColorDict] (Color, BackgroundColorRGB, ForegroundColorRGB, [Count]) VALUES('White', 0XFFFFFF, 0X000000, 0)
-INSERT INTO [ColorDict] (Color, BackgroundColorRGB, ForegroundColorRGB, [Count]) VALUES('Silver', 0x000000, 0X000000, 0)
+INSERT INTO [ColorDict] (Color, BackgroundColorRGB, ForegroundColorRGB, [Count]) VALUES('Silver', 0xC0C0C0, 0X000000, 0)
 INSERT INTO [ColorDict] (Color, BackgroundColorRGB, ForegroundColorRGB, [Count]) VALUES('Gray', 0x898989, 0X000000, 0)
 INSERT INTO [ColorDict] (Color, BackgroundColorRGB, ForegroundColorRGB, [Count]) VALUES('Yellow', 0xFFDE21, 0X000000, 0)
 INSERT INTO [ColorDict] (Color, BackgroundColorRGB, ForegroundColorRGB, [Count]) VALUES('Orange', 0xFFA500, 0X000000, 0)

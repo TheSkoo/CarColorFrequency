@@ -44,5 +44,18 @@ namespace CarColorFrequencyApi.DataLayer
 
             return result;
         }
+
+        public void UpdateColorCounts(ColorData colorCounts)
+        {
+            SqlCommand cmd = _conn.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText =
+                "UPDATE [ColorDict] "
+                + "SET [Count] = @Count "
+                + "WHERE [ColorDictPK] = @ColorDictPK";
+            cmd.Parameters.AddWithValue("@Count", colorCounts.Count);
+            cmd.Parameters.AddWithValue("@ColorDictPK", colorCounts.ColorDictId);
+            cmd.ExecuteNonQuery();
+        }
     }
 }
