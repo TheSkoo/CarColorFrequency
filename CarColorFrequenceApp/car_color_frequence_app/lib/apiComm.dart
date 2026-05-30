@@ -23,4 +23,24 @@ static Future<List<ColorData>> fetchData() async {
   }
   return [];
 }
+
+static Future<void> postData(ColorData colorData) async {
+  final url = Uri.parse('http://192.168.50.89:779/CarColorFrequency');
+  
+  try {
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(colorData.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      print('Data posted successfully');
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error fetching data: $e');
+  }
+}
 }

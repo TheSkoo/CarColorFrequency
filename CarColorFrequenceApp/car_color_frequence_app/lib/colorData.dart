@@ -20,6 +20,16 @@ class ColorData {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'colorDictId': colorDictId,
+      'color': color,
+      'backgroundColorRGB': backgroundColorRGB,
+      'foregroundColorRGB': foregroundColorRGB,
+      'count': count,
+    };
+  }
+
   factory ColorData.fromJson(Map<String, dynamic> json) {
     return ColorData(
       colorDictId: json['colorDictId'],

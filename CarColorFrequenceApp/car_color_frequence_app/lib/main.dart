@@ -71,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter(int colorDictId) {
     var colorDataItem = colorData.firstWhere((item) => item.colorDictId == colorDictId);
     colorDataItem.count++;
+    Apicomm.postData(colorDataItem);
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below

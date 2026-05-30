@@ -18,5 +18,21 @@ namespace CarColorFrequencyApi.Controllers
                 return result.ToArray();
             }
         }
+
+        [HttpPost]
+        public IActionResult Get([FromBody] ColorData data)
+        {
+            if (data == null)
+            {
+                return BadRequest("Invalid JSON payload.");
+            }
+
+            using (var db = new DBAccess())
+            {
+                db.UpdateColorCounts(data);
+                var message = $"Color data was updated successfully.";
+                return Ok(new { Message = message });
+            }
+        }
     }
 }
