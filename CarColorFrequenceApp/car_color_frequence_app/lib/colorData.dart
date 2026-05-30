@@ -3,7 +3,6 @@ class ColorData {
     String color = '';
     int backgroundColorRGB = 0;
     int foregroundColorRGB = 0;
-    int colorCountId = 0;
     int count = 0;
 
     ColorData({
@@ -11,7 +10,6 @@ class ColorData {
       required this.color,
       required this.backgroundColorRGB,
       required this.foregroundColorRGB,
-      required this.colorCountId,
       required this.count,
     });
     
@@ -28,7 +26,6 @@ class ColorData {
       color: json['color'],
       backgroundColorRGB: json['backgroundColorRGB'],
       foregroundColorRGB: json['foregroundColorRGB'],
-      colorCountId: json['colorCountId'],
       count: json['count'],
     );
   }}

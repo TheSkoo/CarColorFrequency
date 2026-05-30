@@ -27,10 +27,8 @@ namespace CarColorFrequencyApi.DataLayer
             SqlCommand cmd = _conn.CreateCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText =
-                "SELECT [ColorDictPK], [Color], [BackgroundColorRGB], [ForegroundColorRGB], "
-            + "ISNULL([ColorCountPK], 0) AS [ColorCountPK], ISNULL([Count], 0) AS [Count] "
-                + "FROM [ColorDict] CD "
-                + "LEFT OUTER JOIN [ColorCount] CC ON CD.[ColorDictPK] = CC.[ColorDictFK]";
+                "SELECT [ColorDictPK], [Color], [BackgroundColorRGB], [ForegroundColorRGB], [Count]"
+                + "FROM [ColorDict]";
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -40,8 +38,7 @@ namespace CarColorFrequencyApi.DataLayer
                     Color = reader.GetString(1),
                     BackgroundColorRGB = reader.GetInt32(2),
                     ForegroundColorRGB = reader.GetInt32(3),
-                    ColorCountId = reader.GetInt32(4),
-                    Count = reader.GetInt32(5)
+                    Count = reader.GetInt32(4)
                 });
             }
 
