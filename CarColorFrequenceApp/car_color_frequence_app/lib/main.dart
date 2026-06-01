@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:complete_timer/complete_timer.dart';
 import './apiComm.dart';
 import './colorData.dart';
 
@@ -56,22 +57,60 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- List<ColorData> colorData = [];
+  // list of car colors to track, will be populated from API call
+  List<ColorData> _colorData = [];
+
+  // The following two variables are for bundling updates top the server to avoid making a web api call for every button click, 
+  // which would be inefficient and could cause performance issues. 
+  // Instead, we will track how many button clicks have been made that have not yet been committed to the server, 
+  // and once that count reaches a certain threshold, we will make a web api call to 
+  // update the server with the new counts for all colors at once, and reset the pending count back to 0. 
+  // This way we can reduce the number of web api calls and improve performance while still keeping the server 
+  // updated with the latest counts in a reasonable timeframe.
+  int _pendingCount = 0;
+
+  // threshold of uncommitted button clicks before triggering a web api call to update the server with the new counts
+  static const int _commitThreshold = 50;
+
+  CompleteTimer get _staleDataTimer => CompleteTimer(
+    duration: Duration(seconds: 30),
+    periodic: false, // Set to true to make the timer repeat periodically
+    autoStart: false, // Set to true to start the timer immediately
+    // The callback function is invoked after the given duration.
+    callback: (timer) {
+      if (_pendingCount > 0) {
+        _staleDataTimer.cancel(); // Cancel the timer to free up resources
+        _commitData();
+      }
+    },
+  );
 
   @override
   void initState() {
     super.initState();
     Apicomm.fetchData().then((value) {
         setState(() {
-          colorData = value;
+          _colorData = value;
         });
   });
   }
 
-  void _incrementCounter(int colorDictId) {
-    var colorDataItem = colorData.firstWhere((item) => item.colorDictId == colorDictId);
+  void _commitData() {
+    Apicomm.postData(_colorData);
+    _pendingCount = 0;
+  }
+
+  void _incrementCounter (int colorDictId) {
+    var colorDataItem = _colorData.firstWhere((item) => item.colorDictId == colorDictId);
     colorDataItem.count++;
-    Apicomm.postData(colorDataItem);
+    _pendingCount++;
+    if (_pendingCount >= _commitThreshold) {  
+      _commitData();
+    } else {
+      if (!_staleDataTimer.isRunning) {
+        _staleDataTimer.start();
+      }
+    }
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
@@ -95,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Wrap(
         spacing: 8.0, // Space between buttons
         runSpacing: 8.0, // gap between lines
-        children: colorData.map((label) {
+        children: _colorData.map((label) {
           return ElevatedButton(
             onPressed: () => _incrementCounter(label.colorDictId),
             style: ElevatedButton.styleFrom(
