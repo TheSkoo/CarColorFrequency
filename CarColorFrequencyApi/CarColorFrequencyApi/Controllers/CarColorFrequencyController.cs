@@ -20,7 +20,7 @@ namespace CarColorFrequencyApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Get([FromBody] ColorData data)
+        public IActionResult Commit([FromBody] List<ColorData> data)
         {
             if (data == null)
             {
@@ -29,7 +29,14 @@ namespace CarColorFrequencyApi.Controllers
 
             using (var db = new DBAccess())
             {
-                db.UpdateColorCounts(data);
+                foreach (var colorData in data)
+                {
+                    if (colorData.ColorDictId <= 0)
+                    {
+                        return BadRequest("Each ColorData item must have a valid ColorDictId and Color.");
+                    }
+                    db.UpdateColorCounts(colorData);
+                }
                 var message = $"Color data was updated successfully.";
                 return Ok(new { Message = message });
             }
