@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarColorFrequencyApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CarColorFrequencyController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<ColorData> Get()
+        [HttpGet("FetchColorData")]
+        public IEnumerable<ColorData> FetchColorData()
         {
             using (var db = new DBAccess())
             {
@@ -19,7 +19,7 @@ namespace CarColorFrequencyApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("Commit")]
         public IActionResult Commit([FromBody] List<ColorData> data)
         {
             if (data == null)
@@ -33,7 +33,7 @@ namespace CarColorFrequencyApi.Controllers
                 {
                     if (colorData.ColorDictId <= 0)
                     {
-                        return BadRequest("Each ColorData item must have a valid ColorDictId and Color.");
+                        return BadRequest("Each ColorData item must have a valid ColorDictId.");
                     }
                     db.UpdateColorCounts(colorData);
                 }

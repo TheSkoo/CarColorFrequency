@@ -4,12 +4,13 @@ import './colorData.dart';
 
 class Apicomm
 {
-  static final url = Uri.parse('http://192.168.50.89:779/CarColorFrequency');
+  static final String url = "http://192.168.50.89:779/api/CarColorFrequency/";
  
 static Future<List<ColorData>> fetchData() async {
  
   try {
-    final response = await http.get(url);
+    final getUrl = Uri.parse("${url}FetchColorData");
+    final response = await http.get(getUrl);
     
     if (response.statusCode == 200) {
       final List<dynamic> parsedJson = jsonDecode(response.body);
@@ -27,8 +28,9 @@ static Future<List<ColorData>> fetchData() async {
 
 static Future<void> postData(List<ColorData> colorData) async {
   try {
+    final commitUrl = Uri.parse("${url}Commit");
     final response = await http.post(
-      url,
+      commitUrl,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(colorData.map((item) => item.toJson()).toList()),
     );
