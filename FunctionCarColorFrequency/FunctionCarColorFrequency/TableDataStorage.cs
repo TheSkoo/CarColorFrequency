@@ -12,12 +12,8 @@ namespace FunctionCarColorFrequency
         public static readonly string STORAGE_ACCOUNT_NAME = "carcolorstorageaccount";
         public static readonly string PARTITION_KEY = "CarColorData";
         public static readonly string TABLE_NAME = "CarColorDictionary";
-        public static readonly string ACCOUNT_KEY = "bs7Wlk0cjcttlacrUo8X7vHAZjan4HmTPqXhciYjmNE75L2pWefWS8AKNwihK6HVqnw1b0xIA+yN+ASt5jdsdg==";
-        public static readonly string CONNECTION_STRING = 
-            string.Format(
-                    "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix=core.windows.net",
-                    STORAGE_ACCOUNT_NAME,
-                    ACCOUNT_KEY);
+        public static string ACCOUNT_KEY = null;
+        public static string CONNECTION_STRING = null;
 
         #region default Color Table Enties
         private static List<ColorDataEntity> DefaultTableEntries = new List<ColorDataEntity>()
@@ -117,6 +113,15 @@ namespace FunctionCarColorFrequency
 
         public static async Task CheckIfStorageExists()
         {
+            if (string.IsNullOrEmpty(ACCOUNT_KEY))
+            {
+                ACCOUNT_KEY = Environment.GetEnvironmentVariable("STORAGE_ACCOUNT_KEY");
+                CONNECTION_STRING =
+                    string.Format(
+                        "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix=core.windows.net",
+                        STORAGE_ACCOUNT_NAME,
+                        ACCOUNT_KEY);
+            }
             TableClient tableClient = new TableClient(CONNECTION_STRING, TABLE_NAME);
 
             // Query entities using LINQ expressions
