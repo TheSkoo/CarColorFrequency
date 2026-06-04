@@ -9,7 +9,7 @@ namespace CarColorFrequencyApi.Controllers
     [Route("api/[controller]")]
     public class CarColorFrequencyController : ControllerBase
     {
-        [HttpGet("FetchColorData")]
+        [HttpGet]
         public IEnumerable<ColorData> FetchColorData()
         {
             using (var db = new DBAccess())
@@ -19,7 +19,7 @@ namespace CarColorFrequencyApi.Controllers
             }
         }
 
-        [HttpPost("Commit")]
+        [HttpPost]
         public IActionResult Commit([FromBody] List<ColorData> data)
         {
             if (data == null)
