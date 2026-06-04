@@ -4,12 +4,16 @@ import './colorData.dart';
 
 class Apicomm
 {
-  static final String url = "http://192.168.50.89:779/api/CarColorFrequency/";
+  // url for local api hosted by IIS
+  //static final String url = "http://localhost.com:779/api/CarColorFrequency/";
+
+  // url for api hosted by local Azure function
+  static final String url = "http://localhost.com:7194/api/CarColorFrequency/";
  
 static Future<List<ColorData>> fetchData() async {
  
   try {
-    final getUrl = Uri.parse("${url}FetchColorData");
+    final getUrl = Uri.parse(url);
     final response = await http.get(getUrl);
     
     if (response.statusCode == 200) {
@@ -28,7 +32,7 @@ static Future<List<ColorData>> fetchData() async {
 
 static Future<void> postData(List<ColorData> colorData) async {
   try {
-    final commitUrl = Uri.parse("${url}Commit");
+    final commitUrl = Uri.parse(url);
     final response = await http.post(
       commitUrl,
       headers: {'Content-Type': 'application/json'},
