@@ -1,0 +1,7 @@
+1. Switch Azure function to https.
+2. Modify Dart app to catch shutdowns and flush pending changes.
+3. Use same mechanism in local and Azure run time for fetching table storage key.
+4. Deploy to Azure.
+5. Get Android build working.
+6. Add Dart floating button to toggle button text between counts and % of total.
+
