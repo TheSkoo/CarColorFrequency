@@ -104,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var colorDataItem = _colorData.firstWhere((item) => item.colorDictId == colorDictId);
     colorDataItem.count++;
     _pendingCount++;
+  
     if (_pendingCount >= _commitThreshold) {  
       _commitData();
     } else {
@@ -123,14 +124,15 @@ class _MyHomePageState extends State<MyHomePage> {
   var _displayCounts = true;
   var _totalCounts = 0;
   void _toggleDisplayMode() {
-    setState(() {
-      _totalCounts = _colorData.fold(0, (sum, item) => sum + item.count);
       _displayCounts = !_displayCounts;
+    setState(() {
     });
   }
 
   @override
   Widget build(BuildContext context) {
+      _totalCounts = _colorData.fold(0, (sum, item) => sum + item.count);
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
