@@ -5,10 +5,10 @@ import './colorData.dart';
 class Apicomm
 {
   // url for local api hosted by IIS
-  //static final String url = "http://localhost.com:779/api/CarColorFrequency/";
+  static final String url = "http://localhost.com:779/api/CarColorFrequency/";
 
   // url for api hosted by local Azure function
-  static final String url = "http://localhost.com:7194/api/CarColorFrequency/";
+  //static final String url = "http://localhost.com:7194/api/CarColorFrequency/";
  
 static Future<List<ColorData>> fetchData() async {
  

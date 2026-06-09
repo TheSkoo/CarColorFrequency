@@ -120,6 +120,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  var _displayCounts = true;
+  var _totalCounts = 0;
+  void _toggleDisplayMode() {
+    setState(() {
+      _totalCounts = _colorData.fold(0, (sum, item) => sum + item.count);
+      _displayCounts = !_displayCounts;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -134,16 +143,26 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Wrap(
         spacing: 8.0, // Space between buttons
         runSpacing: 8.0, // gap between lines
-        children: _colorData.map((label) {
-          return ElevatedButton(
-            onPressed: () => _incrementCounter(label.colorDictId),
+        children: <Widget> [
+          ..._colorData.map((label) {
+            return ElevatedButton(
+              onPressed: () => _incrementCounter(label.colorDictId),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(label.backgroundColorRGB + 4278190080), // convert to ARGB by adding alpha value
+                foregroundColor: Color(label.foregroundColorRGB + 4278190080),
+              ),
+              child: Text(_displayCounts ? label.getFormattedCount() : "${(label.count / _totalCounts * 100).toStringAsFixed(1)}%"),
+            );
+          }),
+          ElevatedButton(
+            onPressed: () => _toggleDisplayMode(),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(label.backgroundColorRGB + 4278190080), // convert to ARGB by adding alpha value
-              foregroundColor: Color(label.foregroundColorRGB + 4278190080),
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
             ),
-            child: Text(label.getFormattedCount()),
-          );
-        }).toList(),
+            child: Text("Toggle Display Mode"),
+          ),
+        ]
         )
     );
   }
