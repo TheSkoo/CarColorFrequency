@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:complete_timer/complete_timer.dart';
 import './apiComm.dart';
@@ -57,7 +59,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // list of car colors to track, will be populated from API call
+  late final AppLifecycleListener _listener;
+  
+    // list of car colors to track, will be populated from API call
   List<ColorData> _colorData = [];
 
   // The following two variables are for bundling updates top the server to avoid making a web api call for every button click, 
@@ -88,11 +92,27 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    // Initialize the listener with your callback handlers
+    _listener = AppLifecycleListener(
+      onExitRequested: _handleExitRequest,
+    );
     Apicomm.fetchData().then((value) {
         setState(() {
           _colorData = value;
         });
   });
+  }
+
+  Future<AppExitResponse> _handleExitRequest() async {
+    _commitData();
+    return AppExitResponse.exit; // Exit the app with a success code
+  }
+
+  @override
+  void dispose() {
+    // Clean up the listener to prevent memory leaks
+    _listener.dispose();
+    super.dispose();
   }
 
   void _commitData() {
